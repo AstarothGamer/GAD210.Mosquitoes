@@ -1,10 +1,12 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Transform cam;
-    [SerializeField] private float speed;
+    [SerializeField] private float speed = 12;
+    [SerializeField] private float boostSpeed = 25;
     [SerializeField] private float mouseSensitivity = 3f;
     [SerializeField] private float xRotation = 0;
     [SerializeField] private float yRotation;
@@ -12,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector3 moveDirection = Vector3.zero;
     [SerializeField] private float energy = 0f;
     [SerializeField] private float timeDuration;
+    [SerializeField] private bool isBoostActive = false;
 
 
     void Start()
@@ -30,9 +33,9 @@ public class PlayerMovement : MonoBehaviour
         RotateWithMouse();
         Dodging();
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && !isBoostActive && energy >= 5)
         {
-            Biting();
+            StartCoroutine(Boost());
         }
     }
 
@@ -40,14 +43,9 @@ public class PlayerMovement : MonoBehaviour
     {
         float vertical = Input.GetAxis("Vertical");
         
-        if(Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            moveDirection = cam.forward * vertical;
-        }
-        if(!Input.GetKey(KeyCode.Mouse1))
-        {
-            moveDirection = cam.forward * vertical;
-        }
+
+
+        moveDirection = transform.forward * vertical;
 
         moveDirection.Normalize();
 
@@ -99,5 +97,18 @@ public class PlayerMovement : MonoBehaviour
             energy = 0;
             transform.Translate(moveDirection * speed * 3 * Time.deltaTime, Space.World);
         }     
+    }
+
+    IEnumerator Boost()
+    {
+        isBoostActive = true;
+        float originalSpeed = speed;
+        speed = boostSpeed;
+
+        transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+        yield return new WaitForSeconds(3);
+
+        speed = originalSpeed;
+        isBoostActive = false;
     }
 }
