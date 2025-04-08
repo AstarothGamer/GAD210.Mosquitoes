@@ -12,8 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float yRotation;
     [SerializeField] private int dodgingDistance = 2;
     [SerializeField] private Vector3 moveDirection = Vector3.zero;
-    [SerializeField] private float energy = 0f;
-    [SerializeField] private float timeDuration;
+    [SerializeField] private float energy = 5f;
+    [SerializeField] private float timeDuration = 3;
     [SerializeField] private bool isBoostActive = false;
 
 
@@ -27,13 +27,12 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         energy += Time.deltaTime;
-        timeDuration -= Time.deltaTime;
         
         Movement();
         RotateWithMouse();
         Dodging();
 
-        if(Input.GetKeyDown(KeyCode.Space) && !isBoostActive && energy >= 5)
+        if(Input.GetKeyDown(KeyCode.Space) && !isBoostActive && energy >= 8)
         {
             StartCoroutine(Boost());
         }
@@ -88,25 +87,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Biting()
-    {
-        timeDuration = 3;
-
-        if(energy >= 5 && timeDuration > 0)
-        {
-            energy = 0;
-            transform.Translate(moveDirection * speed * 3 * Time.deltaTime, Space.World);
-        }     
-    }
-
     IEnumerator Boost()
     {
+        energy = 0;
         isBoostActive = true;
         float originalSpeed = speed;
         speed = boostSpeed;
 
         transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(timeDuration);
 
         speed = originalSpeed;
         isBoostActive = false;

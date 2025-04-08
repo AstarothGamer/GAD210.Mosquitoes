@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 330585546}
   speed: 12
+  boostSpeed: 25
   mouseSensitivity: 3
   xRotation: 0
   yRotation: 0
@@ -160,6 +161,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   energy: 0
   timeDuration: 0
+  isBoostActive: 0
 --- !u!135 &154435101
 SphereCollider:
   m_ObjectHideFlags: 0
