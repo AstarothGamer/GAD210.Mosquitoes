@@ -19,7 +19,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        cam = Camera.main.transform;
+
+        if (cam == null)
+        {
+
+            cam = Camera.main.transform;
+
+        }
+
+           
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -29,7 +37,8 @@ public class PlayerMovement : MonoBehaviour
         energy += Time.deltaTime;
         
         Movement();
-        RotateWithMouse();
+        //RotateWithMouse();
+        RotateToCamera();
         Dodging();
 
         if(Input.GetKeyDown(KeyCode.Space) && !isBoostActive && energy >= 8)
@@ -41,51 +50,130 @@ public class PlayerMovement : MonoBehaviour
     void Movement()
     {
         float vertical = Input.GetAxis("Vertical");
-        
 
+        float horizontal = Input.GetAxis("Horizontal");
 
-        moveDirection = transform.forward * vertical;
+        //Vector3 forward = cam.forward;
+
+        //Vector3 right = cam.right;
+
+        //forward.y = 0;
+
+        //right.y = 0;
+
+        Vector3 forward = cam.forward;
+
+        Vector3 right = cam.right;
+
+        forward.Normalize();
+
+        right.Normalize();
+
+        moveDirection = forward * vertical + right * horizontal;
 
         moveDirection.Normalize();
 
-        transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+        transform.position += moveDirection * speed * Time.deltaTime;
+
+        // transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
     }
 
-    void RotateWithMouse()
+
+    void RotateToCamera()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-        if(Input.GetKey(KeyCode.Mouse1))
-        {
-            cam.Rotate(-mouseY, mouseX, 0);
-        }
-        else if(Input.GetKeyUp(KeyCode.Mouse1))
-        {
-            Quaternion basic = new(0, 0, 0, 0);
-            cam.rotation = basic;
-        }
-        else
-        {
-            transform.Rotate(Vector3.up * mouseX);
+        Vector3 lookDirection = cam.forward;
 
-            yRotation += mouseX;
-            xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
+        lookDirection.y = 0;
+
+        if (lookDirection != Vector3.zero)
+        {
+
+            Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+
+
         }
+
+
+
+
     }
+
+
+
+
+
+
+
+
+    //void RotateWithMouse()
+    //{
+    //    float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+    //    float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+    //    if(Input.GetKey(KeyCode.Mouse1))
+    //    {
+    //        cam.Rotate(-mouseY, mouseX, 0);
+    //    }
+    //    else if(Input.GetKeyUp(KeyCode.Mouse1))
+    //    {
+    //        Quaternion basic = new(0, 0, 0, 0);
+    //        cam.rotation = basic;
+    //    }
+    //    else
+    //    {
+    //        transform.Rotate(Vector3.up * mouseX);
+
+    //        yRotation += mouseX;
+    //        xRotation -= mouseY;
+    //        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+    //        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
+    //    }
+    //}
 
     void Dodging()
     {
-        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        //if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        //{
+        //    float horizontal = Input.GetAxis("Horizontal");
+        //    Vector3 moveDirection = cam.right * horizontal;
+        //    moveDirection.Normalize();
+        //    transform.Translate(moveDirection * dodgingDistance, Space.World);
+        //}
+
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
+
             float horizontal = Input.GetAxis("Horizontal");
-            Vector3 moveDirection = cam.right * horizontal;
-            moveDirection.Normalize();
-            transform.Translate(moveDirection * dodgingDistance, Space.World);
+
+            Vector3 dodgeDirection = cam.right * horizontal;
+
+            dodgeDirection.y = 0;
+
+            dodgeDirection.Normalize();
+
+            transform.position += dodgeDirection * dodgingDistance;
+
+
         }
+
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
 
     IEnumerator Boost()
     {
