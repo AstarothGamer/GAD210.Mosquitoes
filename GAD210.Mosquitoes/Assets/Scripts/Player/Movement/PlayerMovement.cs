@@ -82,19 +82,24 @@ public class PlayerMovement : MonoBehaviour
     void RotateToCamera()
     {
 
-        Vector3 lookDirection = cam.forward;
+        //Vector3 lookDirection = cam.forward;
 
-        lookDirection.y = 0;
+        //lookDirection.y = 0;
 
-        if (lookDirection != Vector3.zero)
-        {
+        //if (lookDirection != Vector3.zero)
+        //{
 
-            Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+        //    Quaternion targetRotation = Quaternion.LookRotation(cam.forward);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
 
 
-        }
+        //}
+
+
+        Quaternion targetRotation = Quaternion.LookRotation(cam.forward);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
 
 
 
