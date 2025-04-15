@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         RotateWithMouse();
         Dodging();
 
-        if(Input.GetKeyDown(KeyCode.Space) && !isBoostActive && energy >= 8)
+        if(Input.GetKeyDown(KeyCode.LeftShift) && !isBoostActive && energy >= 8)
         {
             StartCoroutine(Boost());
         }

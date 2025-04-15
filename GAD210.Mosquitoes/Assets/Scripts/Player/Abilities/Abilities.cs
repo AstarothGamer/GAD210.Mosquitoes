@@ -6,7 +6,7 @@ public class Abilities : MonoBehaviour
 {
     [SerializeField] private Stats playerStats;
     [SerializeField] private TMP_Text biteNotificationText;    
-    public GameObject interactionPanel;
+    [SerializeField] private GameObject interactionPanel;
     public bool isBiting = false;
     private EnemiesMovement currentNPC = null;
     private Coroutine bitingCoroutine = null;
