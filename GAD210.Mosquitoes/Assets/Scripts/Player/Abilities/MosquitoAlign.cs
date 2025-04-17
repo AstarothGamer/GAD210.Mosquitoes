@@ -34,6 +34,7 @@ public class MosquitoAlign : MonoBehaviour
                 transform.SetParent(null, true);
                 targetSurface = null;
                 isSitting = false;
+                transform.localScale = new Vector3(0.0025f, 0.0025f, 0.0025f);
                 return;
             }
 
