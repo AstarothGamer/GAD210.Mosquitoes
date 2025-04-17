@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Transform cam;
+    [Header("Settings")]
     [SerializeField] private float speed = 4;
     [SerializeField] private float boostSpeed = 8;
     [SerializeField] private float mouseSensitivity = 3f;
     [SerializeField] private float xRotation = 0;
     [SerializeField] private float yRotation;
     [SerializeField] private int dodgingDistance = 2;
-    [SerializeField] private Vector3 moveDirection = Vector3.zero;
     [SerializeField] private float energy = 5f;
     [SerializeField] private float timeDuration = 3;
+    [Header("Other")]
     [SerializeField] private bool isBoostActive = false;
+    [SerializeField] private Vector3 moveDirection = Vector3.zero;
     [SerializeField] private Abilities abilities;
     [SerializeField] private MosquitoAlign aligner;
+    [SerializeField] private Transform cam;
+
 
 
     void Start()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Abilities : MonoBehaviour
 {
+    [Header("Other")]
     [SerializeField] private Stats playerStats;
     [SerializeField] private TMP_Text biteNotificationText;    
     [SerializeField] private GameObject interactionPanel;
@@ -11,7 +12,7 @@ public class Abilities : MonoBehaviour
     public bool isBiting = false;
     private EnemiesMovement currentNPC = null;
     private Coroutine bitingCoroutine = null;
-
+    [Header("Settings")]
     public float expGainInterval = 1.0f; 
     public int expPerInterval = 10;     
     public float      rayLength   = 0.5f;

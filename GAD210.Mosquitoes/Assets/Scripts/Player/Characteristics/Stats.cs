@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour
 {
+    [Header("Other")]
     [SerializeField] private TMP_Text levelUpNotificationText;
     [SerializeField] private TMP_Text statsNotificationText;  
+    [Header("Settings")]
     public int level = 1;
     public int currentExp = 0;
     public int expToNextLevel = 100;
