@@ -15,7 +15,7 @@ public class Abilities : MonoBehaviour
     [Header("Settings")]
     public float expGainInterval = 1.0f; 
     public int expPerInterval = 10;     
-    public float      rayLength   = 0.5f;
+    public float      rayLength   = 0.2f;
     public LayerMask  surfaceMask = ~0;
 
     void Start()
@@ -28,6 +28,11 @@ public class Abilities : MonoBehaviour
 
     void Update()
     {
+        Vector3 origin = transform.position;
+        Vector3 dir    = -transform.up;
+
+        Debug.DrawRay(origin, dir * rayLength, Color.cyan, 1f);
+
         if(isBiting && Input.GetKeyDown(KeyCode.E))
         {
             StopBiting();
@@ -96,7 +101,7 @@ public class Abilities : MonoBehaviour
         }
     }
 
-        private void CheckLegRay()
+    private void CheckLegRay()
     {
         Vector3 origin = transform.position;
         Vector3 dir    = -transform.up;
