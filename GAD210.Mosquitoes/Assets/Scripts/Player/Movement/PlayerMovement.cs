@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Transform cam;
-    [SerializeField] private float speed = 12;
-    [SerializeField] private float boostSpeed = 25;
+    [SerializeField] private float speed = 4;
+    [SerializeField] private float boostSpeed = 8;
     [SerializeField] private float mouseSensitivity = 3f;
     [SerializeField] private float xRotation = 0;
     [SerializeField] private float yRotation;
@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float energy = 5f;
     [SerializeField] private float timeDuration = 3;
     [SerializeField] private bool isBoostActive = false;
+    [SerializeField] private Abilities abilities;
+    [SerializeField] private MosquitoAlign aligner;
 
 
     void Start()
@@ -27,9 +29,18 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         energy += Time.deltaTime;
+
+
+        RotateWithMouse();
+
+
+        if(abilities.isBiting)
+            return;
+        
+        if (aligner != null && aligner.isSitting)
+            return;
         
         Movement();
-        RotateWithMouse();
         Dodging();
 
         if(Input.GetKeyDown(KeyCode.LeftShift) && !isBoostActive && energy >= 8)
@@ -41,8 +52,6 @@ public class PlayerMovement : MonoBehaviour
     void Movement()
     {
         float vertical = Input.GetAxis("Vertical");
-        
-
 
         moveDirection = transform.forward * vertical;
 
@@ -65,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
             Quaternion basic = new(0, 0, 0, 0);
             cam.rotation = basic;
         }
-        else
+        else if(!aligner.isSitting)
         {
             transform.Rotate(Vector3.up * mouseX);
 

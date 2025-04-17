@@ -7,12 +7,15 @@ public class Abilities : MonoBehaviour
     [SerializeField] private Stats playerStats;
     [SerializeField] private TMP_Text biteNotificationText;    
     [SerializeField] private GameObject interactionPanel;
+    [SerializeField] private MosquitoAlign aligner;
     public bool isBiting = false;
     private EnemiesMovement currentNPC = null;
     private Coroutine bitingCoroutine = null;
 
     public float expGainInterval = 1.0f; 
     public int expPerInterval = 10;     
+    public float      rayLength   = 0.5f;
+    public LayerMask  surfaceMask = ~0;
 
     void Start()
     {
@@ -24,43 +27,24 @@ public class Abilities : MonoBehaviour
 
     void Update()
     {
-        if (currentNPC != null && Input.GetKeyDown(KeyCode.E))
+        if(isBiting && Input.GetKeyDown(KeyCode.E))
+        {
+            StopBiting();
+        }
+        else if (currentNPC != null && Input.GetKeyDown(KeyCode.E))
         {
             if (!isBiting)
             {
                 StartBiting();
             }
-            else
-            {
-                StopBiting();
-            }
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("NPC can be bitten");
-        EnemiesMovement npc = other.GetComponent<EnemiesMovement>();
-        if (npc != null)
+        
+        if(aligner.isSitting)
         {
-            currentNPC = npc;
-            if (interactionPanel != null)
-            {
-                interactionPanel.SetActive(true);
-            }
+            CheckLegRay();
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        Debug.Log("NPC lost");
-        EnemiesMovement npc = other.GetComponent<EnemiesMovement>();
-        if (npc != null && npc == currentNPC)
-        {
-            currentNPC = null;
-            if (interactionPanel != null)
-                interactionPanel.SetActive(false);
-        }
+
     }
 
     void StartBiting()
@@ -70,12 +54,11 @@ public class Abilities : MonoBehaviour
 
         isBiting = true;
 
-        transform.SetParent(currentNPC.transform);
-
         if (biteNotificationText != null)
         {
             biteNotificationText.text = "Biting started";
         }
+        StopCoroutine(ClearMessages(biteNotificationText));
         Debug.Log("Bite started.");
 
         bitingCoroutine = StartCoroutine(BiteCoroutine());
@@ -87,7 +70,6 @@ public class Abilities : MonoBehaviour
             return;
 
         isBiting = false;
-        transform.SetParent(null);
 
         if (bitingCoroutine != null)
         {
@@ -99,6 +81,7 @@ public class Abilities : MonoBehaviour
         if (biteNotificationText != null)
         {
             biteNotificationText.text = "Biting ended.";
+            StartCoroutine(ClearMessages(biteNotificationText));
         }
 
     }
@@ -110,5 +93,43 @@ public class Abilities : MonoBehaviour
             yield return new WaitForSeconds(expGainInterval);
             playerStats.AddExperience(expPerInterval);
         }
+    }
+
+        private void CheckLegRay()
+    {
+        Vector3 origin = transform.position;
+        Vector3 dir    = -transform.up;
+
+        Debug.DrawRay(origin, dir * rayLength, Color.cyan, 1f);
+
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, rayLength, surfaceMask))
+        {
+            EnemiesMovement npc = hit.collider.GetComponentInParent<EnemiesMovement>();
+            Debug.Log($"Hit {hit.collider.name} at {hit.point}, normal {hit.normal}");
+            if(npc != null)
+            {
+                currentNPC = npc;
+                if(interactionPanel != null)
+                {
+                    interactionPanel.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            currentNPC = null;
+            if(interactionPanel != null)
+            {
+                interactionPanel.SetActive(false);
+            }
+            Debug.Log("Nothing found");
+        }
+
+    }
+
+    IEnumerator ClearMessages(TMP_Text text)
+    {
+        yield return new WaitForSeconds(2f);
+        text.text = "";
     }
 }

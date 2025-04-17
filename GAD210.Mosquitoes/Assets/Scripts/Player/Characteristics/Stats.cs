@@ -22,6 +22,11 @@ public class Stats : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        UpdateStatsUI();   
+    }
+
     void LevelUp()
     {
         level++;
