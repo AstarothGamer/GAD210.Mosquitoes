@@ -1,21 +1,23 @@
+using TMPro;
 using UnityEngine;
 
 public class MosquitoAlign : MonoBehaviour
 {
     [Header("Settings")]
-    public KeyCode   alignKey      = KeyCode.F;
-    public float     rayDistance   = 5f;
-    public float     moveSpeed     = 3f;
-    public float     rotationSpeed = 10f;
-    public float     surfaceOffset = 0.1f;
-    public LayerMask surfaceMask   = ~0;
+    public KeyCode alignKey = KeyCode.F;
+    public float rayDistance = 5f;
+    public float moveSpeed = 3f;
+    public float rotationSpeed = 10f;
+    public float surfaceOffset = 0.1f;
+    public LayerMask surfaceMask = ~0;
 
     [Header("Landing")]
-    private bool        isAligning     = false;
-    private Transform   targetSurface  = null;
-    private Vector3     targetLocalPos;
-    private Quaternion  targetLocalRot;
+    private bool isAligning = false;
+    public Transform targetSurface = null;
+    private Vector3 targetLocalPos;
+    private Quaternion targetLocalRot;
     public bool isSitting = false;
+    [SerializeField] private TMP_Text interactionPanel;
 
     [SerializeField] private Abilities ability;
 
@@ -33,12 +35,13 @@ public class MosquitoAlign : MonoBehaviour
             {
                 transform.SetParent(null, true);
                 targetSurface = null;
+                ability.SetTarget(targetSurface);
                 isSitting = false;
                 transform.localScale = new Vector3(0.0025f, 0.0025f, 0.0025f);
                 return;
             }
-
             StartAlignment();
+            ability.SetTarget(targetSurface);
         }
 
         if (isAligning)
@@ -94,7 +97,7 @@ public class MosquitoAlign : MonoBehaviour
         {
             isAligning = false;
         }
-        
+
         transform.localScale = new Vector3(0.0025f, 0.0025f, 0.0025f);
     }
 

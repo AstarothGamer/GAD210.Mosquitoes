@@ -2549,6 +2549,33 @@ MonoBehaviour:
   speed: 2
   rotationSpeed: 5
   reachThreshold: 0.1
+--- !u!54 &1032459002
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032458998}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &1043512513 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 97a9a30bbfa2d41d6939c96479175fe3, type: 3}
@@ -2646,6 +2673,7 @@ MonoBehaviour:
   surfaceMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  currentTarget: {fileID: 0}
 --- !u!65 &1043512519
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2687,7 +2715,9 @@ MonoBehaviour:
   surfaceMask:
     serializedVersion: 2
     m_Bits: 8
+  targetSurface: {fileID: 0}
   isSitting: 0
+  interactionPanel: {fileID: 0}
   ability: {fileID: 1043512518}
 --- !u!1 &1103120651
 GameObject:
@@ -3443,6 +3473,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ab90df716019e4f8083fbcd63f89e301, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1032459000}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ab90df716019e4f8083fbcd63f89e301, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1032459002}
   m_SourcePrefab: {fileID: 100100000, guid: ab90df716019e4f8083fbcd63f89e301, type: 3}
 --- !u!4 &1240335433 stripped
 Transform:
