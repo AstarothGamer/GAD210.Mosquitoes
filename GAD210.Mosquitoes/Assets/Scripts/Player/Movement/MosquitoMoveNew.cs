@@ -4,8 +4,11 @@ using UnityEngine;
 public class MosquitoMoveNew : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float speed = 4;
-    [SerializeField] private float boostSpeed = 8;
+    [SerializeField] private float maxSpeed = 5;
+    [SerializeField] private float minSpeed = 1;
+    [SerializeField] private float currentSpeed;
+    [SerializeField] private float speedStep = 0.1f;
+    [SerializeField] private float boostSpeed = 10;
     [SerializeField] private float mouseSensitivity = 3f;
     [SerializeField] private float xRotation = 0;
     [SerializeField] private float yRotation;
@@ -38,6 +41,14 @@ public class MosquitoMoveNew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if(scroll > 0f)
+            currentSpeed = Mathf.Min(currentSpeed + speedStep, maxSpeed);
+        else if(scroll < 0f)
+            currentSpeed = Mathf.Max(currentSpeed - speedStep, minSpeed);
+
+        if(scroll != 0f)
+            Debug.Log("Speed: " + currentSpeed);
         energy += Time.deltaTime;
 
         RotateToCamera();
@@ -178,17 +189,13 @@ public class MosquitoMoveNew : MonoBehaviour
         energy = 0;
 
         isBoostActive = true;
+        float originalSpeed = currentSpeed;
+        currentSpeed = boostSpeed;
 
-        float originalSpeed = speed;
-
-        speed = boostSpeed;
-
-        transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
-
+        transform.Translate(moveDirection * currentSpeed * Time.deltaTime, Space.World);
         yield return new WaitForSeconds(timeDuration);
 
-        speed = originalSpeed;
-
+        currentSpeed = originalSpeed;
         isBoostActive = false;
 
 
