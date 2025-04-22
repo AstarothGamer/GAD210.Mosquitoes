@@ -3463,6 +3463,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1779499910}
   - component: {fileID: 1779499911}
+  - component: {fileID: 1779499914}
+  - component: {fileID: 1779499913}
+  - component: {fileID: 1779499912}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3500,7 +3503,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca496f9955338346a1ef98e072c41c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  maxSpeed: 5
+  minSpeed: 1
+  currentSpeed: 0
+  speedStep: 0.1
   boostSpeed: 8
   mouseSensitivity: 3
   xRotation: 0
@@ -3510,9 +3516,74 @@ MonoBehaviour:
   timeDuration: 3
   isBoostActive: 0
   moveDirection: {x: 0, y: 0, z: 0}
-  abilities: {fileID: 0}
-  aligner: {fileID: 0}
-  cam: {fileID: 0}
+  abilities: {fileID: 1779499913}
+  aligner: {fileID: 1779499912}
+  cam: {fileID: 1265095996}
+--- !u!114 &1779499912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779499908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a0eaf4e0cc964f1b90f01ca914ed624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alignKey: 102
+  rayDistance: 5
+  moveSpeed: 3
+  rotationSpeed: 10
+  surfaceOffset: 0.1
+  surfaceMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  targetSurface: {fileID: 0}
+  isSitting: 0
+  interactionPanel: {fileID: 0}
+  ability: {fileID: 1779499913}
+--- !u!114 &1779499913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779499908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc1ae5779d5c4dc2a7a4e1e6df2148e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStats: {fileID: 1779499914}
+  biteNotificationText: {fileID: 0}
+  interactionPanel: {fileID: 0}
+  aligner: {fileID: 1779499912}
+  isBiting: 0
+  expGainInterval: 1
+  expPerInterval: 10
+  rayLength: 0.2
+  surfaceMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  currentTarget: {fileID: 0}
+--- !u!114 &1779499914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779499908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9da8d8ffe14454ab5a4db469fb81df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelUpNotificationText: {fileID: 0}
+  statsNotificationText: {fileID: 0}
+  level: 1
+  currentExp: 0
+  expToNextLevel: 100
 --- !u!1 &1799883381 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 65dc10f87204a9d40a15cf3180534822, type: 3}

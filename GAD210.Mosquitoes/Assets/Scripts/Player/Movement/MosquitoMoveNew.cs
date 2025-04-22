@@ -6,11 +6,11 @@ public class MosquitoMoveNew : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float maxSpeed = 5;
     [SerializeField] private float minSpeed = 1;
-    [SerializeField] private float currentSpeed;
+    [SerializeField] private float currentSpeed = 1;
     [SerializeField] private float speedStep = 0.1f;
     [SerializeField] private float boostSpeed = 10;
-    [SerializeField] private float mouseSensitivity = 3f;
-    [SerializeField] private float xRotation = 0;
+    // [SerializeField] private float mouseSensitivity = 3f;
+    // [SerializeField] private float xRotation = 0;
     [SerializeField] private float yRotation;
     [SerializeField] private int dodgingDistance = 2;
     [SerializeField] private float energy = 5f;
@@ -51,20 +51,18 @@ public class MosquitoMoveNew : MonoBehaviour
             Debug.Log("Speed: " + currentSpeed);
         energy += Time.deltaTime;
 
-        RotateToCamera();
 
         if (abilities != null && abilities.isBiting)
         {
             return;
         }
 
-
-
         if (aligner != null && aligner.isSitting)
         {
             return;
         }
 
+        RotateToCamera();
 
 
         Movement();

@@ -6,13 +6,13 @@ public class MosquitoAlign : MonoBehaviour
     [Header("Settings")]
     public KeyCode alignKey = KeyCode.F;
     public float rayDistance = 5f;
-    public float moveSpeed = 3f;
-    public float rotationSpeed = 10f;
+    public float moveSpeed = 10f;
+    public float rotationSpeed = 20f;
     public float surfaceOffset = 0.1f;
     public LayerMask surfaceMask = ~0;
 
     [Header("Landing")]
-    private bool isAligning = false;
+    [SerializeField] private bool isAligning = false;
     public Transform targetSurface = null;
     private Vector3 targetLocalPos;
     private Quaternion targetLocalRot;
@@ -31,13 +31,13 @@ public class MosquitoAlign : MonoBehaviour
                 return;
             }
 
-            if (targetSurface != null)
+            if (isSitting)
             {
                 transform.SetParent(null, true);
                 targetSurface = null;
                 ability.SetTarget(targetSurface);
                 isSitting = false;
-                transform.localScale = new Vector3(0.0025f, 0.0025f, 0.0025f);
+                transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 return;
             }
             StartAlignment();
@@ -69,7 +69,7 @@ public class MosquitoAlign : MonoBehaviour
             targetLocalRot = Quaternion.Inverse(targetSurface.rotation) * worldRot;
 
             isAligning = true;
-            transform.localScale = new Vector3(0.0025f, 0.0025f, 0.0025f);
+            // transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         }
         else
         {
@@ -92,13 +92,14 @@ public class MosquitoAlign : MonoBehaviour
         );
 
         bool posDone = Vector3.Distance(transform.localPosition, targetLocalPos) < 0.01f;
-        bool rotDone = Quaternion.Angle(transform.localRotation, targetLocalRot) < 0.1f;
+        bool rotDone = Quaternion.Angle(transform.localRotation, targetLocalRot) < 0.01f;
+        Debug.Log(posDone + "    rot:" + rotDone);
         if (posDone && rotDone)
         {
             isAligning = false;
         }
 
-        transform.localScale = new Vector3(0.0025f, 0.0025f, 0.0025f);
+        // transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
     void OnDrawGizmosSelected()
