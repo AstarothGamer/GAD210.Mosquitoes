@@ -110,7 +110,7 @@ public class MosquitoMoveNew : MonoBehaviour
 
 
 
-        transform.position += moveDirection * speed * Time.deltaTime;
+        transform.position += moveDirection * currentSpeed * Time.deltaTime;
 
 
 
@@ -134,16 +134,9 @@ public class MosquitoMoveNew : MonoBehaviour
 
     void RotateToCamera()
     {
-
-
         Quaternion targetRotation = Quaternion.LookRotation(cam.forward);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-
-
-
-
-
     }
 
 
@@ -152,10 +145,6 @@ public class MosquitoMoveNew : MonoBehaviour
 
     void Dodging()
     {
-
-
-
-
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
 
@@ -170,18 +159,7 @@ public class MosquitoMoveNew : MonoBehaviour
             dodgeDirection.Normalize();
 
             transform.position += dodgeDirection * dodgingDistance;
-
-
-
-
         }
-
-
-
-
-
-
-
     }
 
     IEnumerator Boost()
