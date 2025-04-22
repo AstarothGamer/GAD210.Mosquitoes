@@ -20,9 +20,11 @@ public class MosquitoAlign : MonoBehaviour
     [SerializeField] private TMP_Text interactionPanel;
 
     [SerializeField] private Abilities ability;
+    [SerializeField] Transform objectToChild;
 
     void Update()
     {
+
         if (Input.GetKeyDown(alignKey) && !ability.isBiting)
         {
             if (isAligning)
@@ -54,7 +56,20 @@ public class MosquitoAlign : MonoBehaviour
                             rayDistance, surfaceMask))
         {
             targetSurface = hit.collider.transform;
+
+            Vector3 worldScale = transform.lossyScale;
+            var setter= targetSurface.GetComponent<MosquitePositionSetter>().obj;
+            if(setter)targetSurface=setter;
+
             transform.SetParent(targetSurface, true);
+
+            Vector3 parentScale = targetSurface.lossyScale;
+            transform.localScale = new Vector3(
+                worldScale.x / parentScale.x,
+                worldScale.y / parentScale.y,
+                worldScale.z * parentScale.z
+            );
+            
             isSitting = true;
 
             Vector3 worldPos = hit.point + hit.normal * surfaceOffset;
