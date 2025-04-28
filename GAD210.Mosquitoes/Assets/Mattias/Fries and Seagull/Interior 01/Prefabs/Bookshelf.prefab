@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 559026891974823545}
   - component: {fileID: 8754809865738826920}
   - component: {fileID: 3284846305994474062}
+  - component: {fileID: 3518900558924840407}
   m_Layer: 0
   m_Name: Bookshelf
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6924316726642863825}
@@ -82,6 +83,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 9.004946, y: 15.745771, z: 3.0903976}
   m_Center: {x: 0.0032262802, y: 2.1827881, z: -0.8767427}
+--- !u!114 &3518900558924840407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6352702322069357167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c30f549d0d884b3d8e6989e8699ea5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 0}
 --- !u!1001 &7463207977729296698
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -22,6 +22,8 @@ public class MosquitoMoveNew : MonoBehaviour
     [SerializeField] private MosquitoAlign aligner;
     [SerializeField] private Transform cam;
 
+    private Rigidbody rb;
+
 
 
     void Start()
@@ -34,7 +36,7 @@ public class MosquitoMoveNew : MonoBehaviour
 
         }
 
-
+        rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -80,14 +82,10 @@ public class MosquitoMoveNew : MonoBehaviour
     void Movement()
     {
         float vertical = Input.GetAxis("Vertical");
-
-
-
         float horizontal = Input.GetAxis("Horizontal");
 
 
         Vector3 forward = cam.forward;
-
         Vector3 right = cam.right;
 
         //forward.y = 0;
@@ -106,27 +104,8 @@ public class MosquitoMoveNew : MonoBehaviour
 
         moveDirection.Normalize();
 
-
-
-        transform.position += moveDirection * currentSpeed * Time.deltaTime;
-
-
-
-        //Vector3 forward = cam.forward;
-
-        //Vector3 right = cam.right;
-
-        //forward.Normalize();
-
-        //right.Normalize();
-
-        //moveDirection = forward * vertical + right * horizontal;
-
-        //moveDirection.Normalize();
-
-        //transform.position += moveDirection * speed * Time.deltaTime;
-
-        // transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+        Vector3 movement = moveDirection * currentSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + movement);
     }
 
 
@@ -136,10 +115,6 @@ public class MosquitoMoveNew : MonoBehaviour
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
-
-
-
-
 
     void Dodging()
     {
@@ -173,7 +148,5 @@ public class MosquitoMoveNew : MonoBehaviour
 
         currentSpeed = originalSpeed;
         isBoostActive = false;
-
-
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9127572037280830840}
   - component: {fileID: 3775843124112422793}
   - component: {fileID: 1499695643819742534}
+  - component: {fileID: 1072057718188661920}
   m_Layer: 0
   m_Name: Phone With Charger
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4409045761782064028}
@@ -104,6 +105,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7414453, y: 0.12583846, z: 1.4555483}
   m_Center: {x: 0.006156072, y: -0.44939277, z: -1.0034387}
+--- !u!114 &1072057718188661920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651614740169721413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c30f549d0d884b3d8e6989e8699ea5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 0}
 --- !u!1001 &4231882541005227127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -159,6 +173,38 @@ PrefabInstance:
     - target: {fileID: 2502068670743476760, guid: 9ddb89f06042d114db7954c1880e18ef, type: 3}
       propertyPath: m_Name
       value: Icon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257339841005696954, guid: 9ddb89f06042d114db7954c1880e18ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.212
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257339841005696954, guid: 9ddb89f06042d114db7954c1880e18ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.558
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257339841005696954, guid: 9ddb89f06042d114db7954c1880e18ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70459247
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257339841005696954, guid: 9ddb89f06042d114db7954c1880e18ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7043466
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257339841005696954, guid: 9ddb89f06042d114db7954c1880e18ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.061024323
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257339841005696954, guid: 9ddb89f06042d114db7954c1880e18ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.061003026
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257339841005696954, guid: 9ddb89f06042d114db7954c1880e18ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -89.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 3257339841005696954, guid: 9ddb89f06042d114db7954c1880e18ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 9.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

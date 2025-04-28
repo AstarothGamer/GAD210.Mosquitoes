@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2411247033057130764}
   - component: {fileID: 1281283190660114579}
   - component: {fileID: 5744506748048389052}
+  - component: {fileID: 3286621124540523121}
   m_Layer: 0
   m_Name: Keyboard
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 374248499680656823}
@@ -82,6 +83,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.4183502, y: 0.2103346, z: 1.1974163}
   m_Center: {x: -0.008225679, y: 0.016451359, z: 0.00000011920929}
+--- !u!114 &3286621124540523121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7085714037633959507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c30f549d0d884b3d8e6989e8699ea5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 0}
 --- !u!1001 &196786718950382172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -134,8 +148,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Keyboard
       objectReference: {fileID: 0}
+    - target: {fileID: 4353724804000257254, guid: 2cbabcf6b1d965f47adcfc1635a9d698, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.017535
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353724804000257254, guid: 2cbabcf6b1d965f47adcfc1635a9d698, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00004
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353724804000257254, guid: 2cbabcf6b1d965f47adcfc1635a9d698, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.02105
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353724804000257254, guid: 2cbabcf6b1d965f47adcfc1635a9d698, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2247933505895898685, guid: 2cbabcf6b1d965f47adcfc1635a9d698, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cbabcf6b1d965f47adcfc1635a9d698, type: 3}
