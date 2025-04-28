@@ -84,7 +84,6 @@ public class MosquitoAlign : MonoBehaviour
             targetLocalRot = Quaternion.Inverse(targetSurface.rotation) * worldRot;
 
             isAligning = true;
-            // transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         }
         else
         {
@@ -113,8 +112,6 @@ public class MosquitoAlign : MonoBehaviour
         {
             isAligning = false;
         }
-
-        // transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
     void OnDrawGizmosSelected()

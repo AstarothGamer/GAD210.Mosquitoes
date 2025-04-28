@@ -11,6 +11,7 @@ public class MosquitePositionSetter : MonoBehaviour
             Debug.Log(name);
             Debug.Break();
             obj= new GameObject($"{name}_follower").transform;
+            obj.SetParent(transform);
         }
     }
 
@@ -19,6 +20,5 @@ public class MosquitePositionSetter : MonoBehaviour
     {
         obj.transform.position=this.transform.position;
         obj.transform.rotation=this.transform.rotation;
-        
     }
 }
