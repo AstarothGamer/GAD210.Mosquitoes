@@ -1,38 +1,37 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemiesMovement : MonoBehaviour
 {
-    public Transform[] waypoints;
+    public Transform[] patrolPoints; 
 
-    public float speed = 2f;
-    public float rotationSpeed = 5f;
-    public float reachThreshold = 0.1f;
+    private NavMeshAgent agent;
 
-    private int currentWaypointIndex = 0;
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+
+        if (patrolPoints.Length > 0)
+        {
+            GoToRandomPoint();
+        }
+    }
 
     void Update()
     {
-        if (waypoints == null || waypoints.Length == 0)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            GoToRandomPoint();
+        }
+    }
+
+    void GoToRandomPoint()
+    {
+        if (patrolPoints.Length == 0)
             return;
 
-        Transform targetWaypoint = waypoints[currentWaypointIndex];
-        Vector3 direction = targetWaypoint.position - transform.position;
-        direction.y = 0;
-
-        if (direction.magnitude < reachThreshold)
-        {
-            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
-            return;
-        }
-
-        Vector3 moveVector = direction.normalized * speed * Time.deltaTime;
-        transform.position += moveVector;
-
-        if (moveVector != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-        }
+        int randomIndex = Random.Range(0, patrolPoints.Length);
+        agent.SetDestination(patrolPoints[randomIndex].position);
     }
 }
 

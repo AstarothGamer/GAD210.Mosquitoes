@@ -15,7 +15,7 @@ public class Abilities : MonoBehaviour
     [Header("Settings")]
     public float expGainInterval = 1.0f; 
     public int expPerInterval = 10;     
-    public float      rayLength   = 0.2f;
+    public float rayLength = 0.2f;
     public LayerMask  surfaceMask = ~0;
 
     public Transform currentTarget=null;
@@ -112,38 +112,6 @@ public class Abilities : MonoBehaviour
             playerStats.AddExperience(expPerInterval);
         }
     }
-
-    // private void CheckLegRay()
-    // {
-    //     Vector3 origin = transform.position;
-    //     Vector3 dir    = -transform.up;
-
-    //     Debug.DrawRay(origin, dir * rayLength, Color.cyan, 1f);
-
-    //     if (Physics.Raycast(origin, dir, out RaycastHit hit, rayLength, surfaceMask))
-    //     {
-    //         EnemiesMovement npc = hit.collider.GetComponentInParent<EnemiesMovement>();
-    //         Debug.Log($"Hit {hit.collider.name} at {hit.point}, normal {hit.normal}");
-    //         if(npc != null)
-    //         {
-    //             currentNPC = npc;
-    //             if(interactionPanel != null)
-    //             {
-    //                 interactionPanel.SetActive(true);
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         currentNPC = null;
-    //         if(interactionPanel != null)
-    //         {
-    //             interactionPanel.SetActive(false);
-    //         }
-    //         Debug.Log("Nothing found");
-    //     }
-
-    // }
 
     IEnumerator ClearMessages(TMP_Text text)
     {

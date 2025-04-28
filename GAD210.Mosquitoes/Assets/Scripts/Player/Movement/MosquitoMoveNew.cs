@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MosquitoMoveNew : MonoBehaviour
 {
@@ -9,18 +10,18 @@ public class MosquitoMoveNew : MonoBehaviour
     [SerializeField] private float currentSpeed = 1;
     [SerializeField] private float speedStep = 0.1f;
     [SerializeField] private float boostSpeed = 10;
-    // [SerializeField] private float mouseSensitivity = 3f;
-    // [SerializeField] private float xRotation = 0;
     [SerializeField] private float yRotation;
     [SerializeField] private int dodgingDistance = 2;
     [SerializeField] private float energy = 5f;
     [SerializeField] private float timeDuration = 3;
+    [SerializeField] private bool boostCoolDown = true;
     [Header("Other")]
     [SerializeField] private bool isBoostActive = false;
     [SerializeField] private Vector3 moveDirection = Vector3.zero;
     [SerializeField] private Abilities abilities;
     [SerializeField] private MosquitoAlign aligner;
     [SerializeField] private Transform cam;
+    public GameObject boostIcon;
 
     private Rigidbody rb;
 
@@ -28,6 +29,7 @@ public class MosquitoMoveNew : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(CoolDown());
 
         if (cam == null)
         {
@@ -51,7 +53,6 @@ public class MosquitoMoveNew : MonoBehaviour
 
         if(scroll != 0f)
             Debug.Log("Speed: " + currentSpeed);
-        energy += Time.deltaTime;
 
 
         if (abilities != null && abilities.isBiting)
@@ -71,7 +72,7 @@ public class MosquitoMoveNew : MonoBehaviour
 
         Dodging();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isBoostActive && energy >= 8)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isBoostActive && !boostCoolDown)
         {
             StartCoroutine(Boost());
         }
@@ -88,20 +89,11 @@ public class MosquitoMoveNew : MonoBehaviour
         Vector3 forward = cam.forward;
         Vector3 right = cam.right;
 
-        //forward.y = 0;
-
-        //right.y = 0;
-
-       
-
         forward.Normalize();
-
         right.Normalize();
 
 
         moveDirection = forward * vertical + right * horizontal;
-
-
         moveDirection.Normalize();
 
         Vector3 movement = moveDirection * currentSpeed * Time.deltaTime;
@@ -137,9 +129,10 @@ public class MosquitoMoveNew : MonoBehaviour
 
     IEnumerator Boost()
     {
-        energy = 0;
-
+        boostCoolDown = true;
         isBoostActive = true;
+        boostIcon.SetActive(false);
+
         float originalSpeed = currentSpeed;
         currentSpeed = boostSpeed;
 
@@ -148,5 +141,13 @@ public class MosquitoMoveNew : MonoBehaviour
 
         currentSpeed = originalSpeed;
         isBoostActive = false;
+        StartCoroutine(CoolDown());
+    }
+
+    IEnumerator CoolDown()
+    {
+        yield return new WaitForSeconds(energy);
+        boostCoolDown = false;
+        boostIcon.SetActive(true);
     }
 }

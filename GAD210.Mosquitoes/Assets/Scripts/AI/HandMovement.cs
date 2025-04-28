@@ -5,7 +5,6 @@ public class HandMovement : MonoBehaviour
     private Vector3 targetPosition;
     private Transform target;
     public float speed = 1f;
-    private bool targetSet = false;
 
     public void SetTarget(Transform targetTransform)
     {
@@ -14,7 +13,6 @@ public class HandMovement : MonoBehaviour
     public void SetTargetPosition(Vector3 position)
     {
         targetPosition = position;
-        targetSet = true;
     }
 
     private void Update()
@@ -40,8 +38,8 @@ public class HandMovement : MonoBehaviour
     private void Hit()
     {
         Debug.Log("Hand hit collider of the player");
+        target.GetComponent<MosquitoHealth>().GameOver();
         Destroy(gameObject);
-
     }
 
     private void Mis()

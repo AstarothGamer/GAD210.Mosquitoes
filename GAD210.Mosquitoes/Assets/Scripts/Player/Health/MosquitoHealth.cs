@@ -1,106 +1,70 @@
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 using UnityEngine.UI;
 
 public class MosquitoHealth : MonoBehaviour
 {
-    private float health;
-    private float lerpTimer;
-
     [Header("Health Bar")]
     public float maxHealth = 100;
+    public float currentHP;
     public float chipSpeed = 2f;
+    public float secondsToEmptyHealth = 60;
+    public float secondsToFullHealth = 30;
     public Image frontHealthBar;
     public Image backHealthBar;
+    private float uiHP;
 
-    [Header("Damage Overlay")]
-    public Image overlay;
-    public float duration;
-    public float fadeSpeed;
+    [Header("Exp Bar")]
+    public Image ExpBar;
+    private float uiExp;
 
-    private float durationTimer;
+    public Abilities player;
+    public Stats stats;
+    public float changeFactor = 6f;
+    public GameObject deathPanel;
 
     void Start()
     {
-        health = maxHealth;
-        overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
+        currentHP = maxHealth;
+        uiExp = stats.currentExp;
     }
 
     void Update()
     {
-        // Handle input for testing
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            TakeDamage(10f); // Takes 10 damage when Y is pressed
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            RestoreHealth(10f); // Heals 10 health when T is pressed
-        }
+        UpdateHP();
+        UpdateExp();
 
-        health = Mathf.Clamp(health, 0, maxHealth);
-        UpdateHealthUI();
-
-        if (health <= 0)
+        if (currentHP <= 0)
         {
             GameOver();
         }
+    }
 
-        if (overlay.color.a > 0)
+    void UpdateHP()
+    {
+        if(player.isBiting & currentHP < maxHealth)
         {
-            if (health < 30) return;
-            durationTimer += Time.deltaTime;
-            if (durationTimer > duration)
-            {
-                float tempAlpha = overlay.color.a;
-                tempAlpha -= Time.deltaTime * fadeSpeed;
-                overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, tempAlpha);
-            }
+            currentHP += 100 / secondsToFullHealth * Time.deltaTime;
         }
-    }
-
-    public void UpdateHealthUI()
-    {
-        float fillF = frontHealthBar.fillAmount;
-        float fillB = backHealthBar.fillAmount;
-        float hFraction = health / maxHealth;
-
-        if (fillB > hFraction)
+        else if(currentHP > 0 & !player.isBiting)
         {
-            frontHealthBar.fillAmount = hFraction;
-            backHealthBar.color = Color.red;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete *= percentComplete;
-            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
+            currentHP -= 100 / secondsToEmptyHealth * Time.deltaTime;  
         }
-        if (fillF < hFraction)
-        {
-            backHealthBar.color = Color.green;
-            backHealthBar.fillAmount = hFraction;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete *= percentComplete;
-            frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
-        }
+        uiHP = Mathf.Lerp(uiHP, currentHP, Time.deltaTime * changeFactor);
+        frontHealthBar.fillAmount = uiHP / 100;
     }
 
-    public void TakeDamage(float damage)
+    void UpdateExp()
     {
-        health -= damage;
-        lerpTimer = 0f;
-        durationTimer = 0;
-        overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
+        uiExp = Mathf.Lerp(uiExp, stats.currentExp, Time.deltaTime * changeFactor);
+        ExpBar.fillAmount = uiExp / stats.expToNextLevel;
     }
 
-    public void RestoreHealth(float healAmount)
+    public void GameOver()
     {
-        health += healAmount;
-        lerpTimer = 0f;
-    }
-
-    private void GameOver()
-    {
+        Cursor.lockState = CursorLockMode.None;
         Debug.Log("Game Over!");
+        deathPanel.SetActive(true);
         Time.timeScale = 0f; // Stop the game
     }
 }
